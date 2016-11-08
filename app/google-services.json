@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "913484923335",
+    "firebase_url": "https://trilce-ucv-79eb7.firebaseio.com",
+    "project_id": "trilce-ucv-79eb7",
+    "storage_bucket": "trilce-ucv-79eb7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913484923335:android:d41643d6dc551915",
+        "android_client_info": {
+          "package_name": "com.company.proyect.kevinpiazzoli.trilceucv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913484923335-nem0ia4qcrjfa4gomqgdu490t0vkekvq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtm9IJx0ZzO0Yne04jduiN0Zlk17fBF6w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

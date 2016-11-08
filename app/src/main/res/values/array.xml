@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Array con los valores de la cabecera de la tabla-->
+    <string-array name="cabecera_tabla">
+        <item>Datos Basicos</item>
+        <item>@string/ID_USUARIO</item>
+    </string-array>
+
+    <string-array name="cabecera_boleta_de_notas_1">
+        <item>Parcial Nº1</item>
+    </string-array>
+
+    <string-array name="cabecera_boleta_de_notas_2">
+        <item>Parcial Nº2</item>
+    </string-array>
+
+    <string-array name="cabecera_boleta_de_notas_3">
+        <item>Parcial Nº3</item>
+    </string-array>
+
+    <string-array name="cabecera_tabla_Asignaturas_Matriculadas">
+        <item>Asignatura</item>
+        <item>Codigo</item>
+        <item>Estado</item>
+        <item>Créditos</item>
+        <item> Vez </item>
+        <item>Sección</item>
+        <item>Ciclo</item>
+        <item>Docente</item>
+        <item>Email Docente</item>
+        <item>Periodo</item>
+        <item>Modalidad</item>
+    </string-array>
+
+</resources>

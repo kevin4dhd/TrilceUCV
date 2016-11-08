@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/header_height"
+    android:background="?attr/colorPrimaryDark"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="@dimen/header_left_padding">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle_image"
+        android:layout_width="@dimen/perfil_image_size"
+        android:layout_height="@dimen/perfil_image_size"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo_ucv"
+        app:border_color="@android:color/white"
+        app:border_width="1dp" />
+
+    <TextView
+        android:id="@+id/NombrePrincipal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kevin Piazzoli Felix Perez"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/md_white_1000"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Carrera"
+        style="@style/Widget.AppCompat.Spinner"
+        android:theme="@style/ThemeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="kevin-10-kevin@hotmail.com"
+        android:textColor="@color/md_white_1000"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+</LinearLayout>

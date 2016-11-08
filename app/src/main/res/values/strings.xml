@@ -1,0 +1,141 @@
+<resources>
+    <string name="app_name">Trilce UCV</string>
+    <string name="Actualizar">Actualizar</string>
+    <string name="add">Añadir Curso</string>
+    <string name="cursos">Cursos</string>
+    <string name="horarios">Horarios</string>
+    <string name="carrera">Carrera</string>
+    <string name="ciclo">Ciclo</string>
+    <string name="a_adir_cursos">Añadir Cursos</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="delete">delete</string>
+    <string name="search">search</string>
+    <string name="title_activity_menu">menu</string>
+    <string name="regresar_al_principio">Regresar al principio</string>
+    <string name="info_de_curso">Info_De_Curso</string>
+    <string name="datos">Datos</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="get_all_cursos">http://kpfp.pe.hu/conectkevin/get_all_Info_Del_Curso.php</string>
+    <string name="Horarios_De_Clases">http://kpfp.pe.hu/conectkevin/get_all_Info_Del_Curso.php</string>
+    <string name="Get_Cursos">http://kpfp.pe.hu/conectkevin/get_all_Info_Del_Curso.php</string>
+    <string name="get_all_info_Del_Curso">http://kpfp.pe.hu/conectkevin/get_all_Info_Del_Curso.php</string>
+    <string name="get_all_ciclo">http://kpfp.pe.hu/conectkevin/get_all_Info_Del_Curso.php</string>
+    <string name="agregar_datos">Añadir Datos</string>
+    <string name="id_text">Id</string>
+    <string name="EditText_carrera">Carrera</string>
+    <string name="insertar">Insertar</string>
+    <string name="insentar_datos">Insentar Datos</string>
+    <string name="escuela">Escuela</string>
+    <string name="periodo">Periodo</string>
+    <string name="curriculo">Curriculo</string>
+    <string name="c_digo">Código</string>
+    <string name="asignatura">Asignatura</string>
+    <string name="docente">Docente</string>
+    <string name="creditos">Creditos</string>
+    <string name="datos_ciclo">Ciclo</string>
+    <string name="horas_de_teoria">Horas de teoria</string>
+    <string name="horas_de_practica">Horas de practica</string>
+    <string name="dia">Dia</string>
+    <string name="horas">Horas</string>
+    <string name="ambiente">Ambiente</string>
+    <string name="datos_ambiente">Ambiente</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Configuración</string>
+    <string name="ID_USUARIO">ID: kfelix</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="datos_basicos">Datos Basicos</string>
+    <string name="mis_asignaturas">Mis Asignaturas</string>
+    <string name="asignaturas_matriculadas">Asignaturas Matriculadas</string>
+    <string name="boleta_de_notas">Boleta de notas</string>
+    <string name="cerrar_sesi_n">Cerrar Sesión</string>
+    <string name="configuraci_n">Configuración</string>
+    <string name="log_out">Cerrar Sesión</string>
+    <string name="informacion_personal">Información Personal</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="color_rojo">Rojo</string>
+    <string name="color_azul">Azul</string>
+    <string name="color_verde">Verde</string>
+    <string name="color_naranja">Naranja</string>
+    <string name="color_rosado">Rosado</string>
+    <string name="color_violeta">Violeta</string>
+    <string name="color_marron">Marron</string>
+    <string name="color_azul_gris">Azul gris</string>
+    <string name="color_azul_oscuro">Azul oscuro</string>
+    <string name="color_azul_claro">Azul claro</string>
+    <string name="color_actual">Color Actual</string>
+    <string name="color_listo">Listo</string>
+    <string name="seleccione_un_dise_o">Seleccione un diseño</string>
+</resources>

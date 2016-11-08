@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/Noticias"
+        android:title="Ultimas Noticias">
+    </item>
+
+    <item
+        android:title="@string/informacion_personal">
+        <menu>
+            <item
+                android:id="@+id/Datos_Basicos"
+                android:title="@string/datos_basicos" />
+        </menu>
+    </item>
+    <item android:title="@string/mis_asignaturas">
+        <menu>
+            <item
+                android:id="@+id/asignaturas_matriculadas"
+                android:title="@string/asignaturas_matriculadas" />
+            <item
+                android:id="@+id/boleta_de_notas"
+                android:title="@string/boleta_de_notas" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/configuration_section"
+        android:title="@string/configuraci_n">
+        <menu>
+            <item
+                android:id="@+id/preferencias"
+                android:icon="@android:drawable/ic_menu_manage"
+                android:title="Configurar Cuenta" />
+            <item
+                android:id="@+id/CerrarSesion"
+                android:icon="@android:drawable/ic_lock_power_off"
+                android:title="@string/log_out" />
+        </menu>
+    </item>
+
+</menu>

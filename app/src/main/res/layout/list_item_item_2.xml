@@ -1,0 +1,40 @@
+<?xml version="10" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:padding="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/estilo_titulo"
+            android:id="@+id/Titulo"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:padding="10sp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/estilo_celda"
+            android:id="@+id/dato1"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/estilo_celda"
+            android:id="@+id/dato2"
+            android:layout_gravity="end"
+            />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
