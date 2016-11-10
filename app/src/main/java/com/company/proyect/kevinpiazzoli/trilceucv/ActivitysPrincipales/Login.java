@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -24,7 +25,12 @@ import com.company.proyect.kevinpiazzoli.trilceucv.BaseDeDatos.BaseDeDatosUCV;
 import com.company.proyect.kevinpiazzoli.trilceucv.BaseDeDatos.GuardarDatos;
 import com.company.proyect.kevinpiazzoli.trilceucv.ConexionInternet.DetectarInternet;
 import com.company.proyect.kevinpiazzoli.trilceucv.ConexionInternet.MySingleton;
+import com.company.proyect.kevinpiazzoli.trilceucv.ConexionInternet.VolleyS;
 import com.company.proyect.kevinpiazzoli.trilceucv.R;
+import com.company.proyect.kevinpiazzoli.trilceucv.RestApi.Endpoints;
+import com.company.proyect.kevinpiazzoli.trilceucv.RestApi.adapter.RestApiAdapter;
+import com.company.proyect.kevinpiazzoli.trilceucv.RestApi.model.UsuarioResponse;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +41,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * Created by Kevin Piazzoli on 26/09/2016.
@@ -47,10 +57,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText User, Password;
     private CheckBox Recordar;
     private BaseDeDatosUCV UCVbd;
+    private VolleyS volley;
+    protected RequestQueue fRequestQueue;
+    private String USUARIO_TRILCE_UCV;
+    private String TOKEN;
+    private String TOKEN_DEVICE;
+    private String[] CODIGOS_PARA_DESCARGAR_CURSOS;
 
     private static String APP_DIRECTORYFotos = "TrilceUCV/";
     private static String MEDIA_DIRECTORYFotos = APP_DIRECTORYFotos + "Fotos/";
     private String LOGIN = "http://kpfp.pe.hu/conectkevin/UCV_datos_usuarios_GETALL.php";
+    private String TOKEN_URL = "http://kpfp.pe.hu/conectkevin/UCV_Token_INSERTandUPDATE.php";
     private String URLSilabosPDF = "http://kpfp.pe.hu/pdfs/";
     private String AñoSilabo = "_silabo_201602.pdf";
     private static final String APP_DIRECTORY = "TrilceUCV/";
@@ -111,8 +128,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             String password = JSONLOGIN.getJSONObject("user").getString("Password");
             if (Usuario.compareTo(user)==0 && Contraseña.compareTo(password)==0) {
                 boolean recordar;
-                if(Recordar.isChecked())recordar = true;
-                else recordar = false;
+                recordar = Recordar.isChecked();
                 GuardarUsuarioEnBaseDeDatos(user,JSONLOGIN.toString(),recordar);
                 return true;
                 }
@@ -123,10 +139,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void GuardarUsuarioEnBaseDeDatos(String user, String CadenaDeDatos,boolean recordar){
-        UCVbd.agregar(0,user,CadenaDeDatos);
-        String Codigos[] = UCVbd.obtenerCodigos(0);
-        MostrarAvance.setText("Descargando Silabos...0%");
-        new DescargarSilabos().execute(Codigos);
+        USUARIO_TRILCE_UCV = user;
+        String token = FirebaseInstanceId.getInstance().getToken();
+        CODIGOS_PARA_DESCARGAR_CURSOS = UCVbd.obtenerCodigos(0);
+        enviarTokenRegistro(token, user);
+        if(!(UCVbd.agregar(0,user,CadenaDeDatos))) UCVbd.actualizar(0,CadenaDeDatos);
+        //new DescargarSilabos().execute(Codigos);
         GuardarDatos.GuardarUsuario(this,user);
         GuardarDatos.GuardarNo_Cerrar_Secion(this,recordar);
     }
@@ -184,7 +202,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             if(aVoid){
                 Toast.makeText(Login.this, "Carpetas creadas Correctamente", Toast.LENGTH_SHORT).show();
             }
-            Ingreso();
+            if(DetectarInternet.isOnline(Login.this)) {
+                volley = VolleyS.getInstance(Login.this.getApplicationContext());
+                fRequestQueue = volley.getRequestQueue();
+                SubirTokenAlABaseDeDatos(fRequestQueue,volley);
+            }
+            else{
+                Toast.makeText(Login.this,"Necesita estar conectado a internet",Toast.LENGTH_SHORT).show();
+            }
         }
 
         private static final int  MEGABYTE = 1024 * 1024;
@@ -211,7 +236,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 e.printStackTrace();
             }
         }
-
     }
 
     public boolean VerificarLoginOffline(String User, String password){
@@ -287,4 +311,55 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //overridePendingTransition(R.anim.left_in, R.anim.left_out);
         finish();
     }
+
+    private void enviarTokenRegistro(String token, String user) {
+        RestApiAdapter restApiAdapter = new RestApiAdapter();
+        Endpoints endpoints = restApiAdapter.establecerConexionRestAPI();
+        Call<UsuarioResponse> usuarioResponseCall = endpoints.registrarTokenID(token, user);
+
+        usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
+            @Override
+            public void onResponse(Call<UsuarioResponse> call, retrofit2.Response<UsuarioResponse> response) {
+                UsuarioResponse usuarioResponse = response.body();
+                Toast.makeText(Login.this,usuarioResponse.getId(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this,usuarioResponse.getToken(),Toast.LENGTH_SHORT).show();
+                TOKEN_DEVICE = usuarioResponse.getId();
+                TOKEN = usuarioResponse.getToken();
+                MostrarAvance.setText("Descargando Silabos...0%");
+                new DescargarSilabos().execute(CODIGOS_PARA_DESCARGAR_CURSOS);
+            }
+            @Override
+            public void onFailure(Call<UsuarioResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void SubirTokenAlABaseDeDatos(RequestQueue fRequestQueue, VolleyS volley){
+        HashMap<String, String> parametros = new HashMap();
+        parametros.put("id", USUARIO_TRILCE_UCV);
+        parametros.put("token", TOKEN);
+        parametros.put("token_device", TOKEN_DEVICE);
+
+        JsonObjectRequest jsArrayRequest = new JsonObjectRequest(
+                Request.Method.POST,
+                TOKEN_URL,
+                new JSONObject(parametros),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(Login.this,"Token guardado correctamente",Toast.LENGTH_SHORT).show();
+                        Ingreso();
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Login.this,"Error al guardar el token",Toast.LENGTH_SHORT).show();
+                    }
+                });
+        VolleyS.addToQueue(jsArrayRequest,fRequestQueue,Login.this,volley);
+    }
+
 }

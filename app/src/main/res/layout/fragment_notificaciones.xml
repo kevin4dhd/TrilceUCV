@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="20sp"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/Token"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Token: "
+        />
+    <EditText
+        android:id="@+id/MensajeNotificacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Escribe un mensaje"
+        />
+    <Button
+        android:id="@+id/EnviarNotificacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Enviar"
+        />
+    <Button
+        android:id="@+id/ToqueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Tocar Button"
+        />
+
+</LinearLayout>

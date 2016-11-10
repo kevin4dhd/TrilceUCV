@@ -4,7 +4,14 @@
         android:id="@+id/Noticias"
         android:title="Ultimas Noticias">
     </item>
-
+    <item
+        android:title="Notificaciones(Beta)">
+        <menu>
+            <item
+                android:id="@+id/Notificaciones"
+                android:title="Enviar Notificaciones" />
+        </menu>
+    </item>
     <item
         android:title="@string/informacion_personal">
         <menu>

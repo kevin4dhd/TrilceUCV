@@ -57,6 +57,7 @@ import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.BoletaDeNotas.Bolet
 import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.Comunicador;
 import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.Datos_Basic;
 import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.Noticias;
+import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.NotificacionesBeta;
 import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.View_Noticia;
 import com.company.proyect.kevinpiazzoli.trilceucv.R;
 import com.company.proyect.kevinpiazzoli.trilceucv.Settings.Preferencias;
@@ -87,7 +88,9 @@ public class Datos_Basicos extends AppCompatActivity
         Boleta_De_Notas.OnFragmentInteractionListener,
         Datos_Basic.OnFragmentInteractionListener,
         Noticias.OnFragmentInteractionListener,
-        View_Noticia.OnFragmentInteractionListener, View.OnClickListener {
+        View_Noticia.OnFragmentInteractionListener,
+        NotificacionesBeta.OnFragmentInteractionListener,
+        View.OnClickListener {
 
     private static String APP_DIRECTORY = "TrilceUCV/";
     private static String MEDIA_DIRECTORY = APP_DIRECTORY + "Fotos";
@@ -235,7 +238,13 @@ public class Datos_Basicos extends AppCompatActivity
             fragment = new Datos_Basic();
             fragmentTransaction = true;
             TituloBarActivity = "Información Personal";
-        } else if (id == R.id.asignaturas_matriculadas) {
+        }
+        else if (id == R.id.Notificaciones) {
+            fragment = new NotificacionesBeta();
+            fragmentTransaction = true;
+            TituloBarActivity = "Notificaciones(Beta)";
+        }
+        else if (id == R.id.asignaturas_matriculadas) {
             fragment = new Asignaturas_Matriculadas();
             fragmentTransaction = true;
             TituloBarActivity = "Mis Asignaturas";
@@ -303,15 +312,15 @@ public class Datos_Basicos extends AppCompatActivity
 
 
     private void showOptions() {
-        final CharSequence[] option = {"Tomar foto", "Elegir de galeria", "Cancelar"};
+        final CharSequence[] option = {"Cámara", "Galeria", "Cancelar"};
         final AlertDialog.Builder builder = new AlertDialog.Builder(Datos_Basicos.this);
         builder.setTitle("Elige una opción");
         builder.setItems(option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(option[which] == "Tomar foto")
+                if(option[which] == "Cámara")
                     CrearDirectorio(0);
-                else if(option[which] == "Elegir de galeria"){
+                else if(option[which] == "Galeria"){
                     CrearDirectorio(1);
                 }else {
                     dialog.dismiss();

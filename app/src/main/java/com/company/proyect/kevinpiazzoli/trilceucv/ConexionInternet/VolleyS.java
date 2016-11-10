@@ -43,4 +43,16 @@ public class VolleyS {
         }
     }
 
+    public static void addToQueue(Request request, RequestQueue fRequestQueue, Context context, VolleyS volley) {
+        if (request != null) {
+            request.setTag(context);
+            if (fRequestQueue == null)
+                fRequestQueue = volley.getRequestQueue();
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+            fRequestQueue.add(request);
+        }
+    }
+
 }

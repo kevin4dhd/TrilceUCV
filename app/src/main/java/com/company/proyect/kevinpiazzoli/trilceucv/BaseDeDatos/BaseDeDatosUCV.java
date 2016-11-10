@@ -46,18 +46,22 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
     }
 
-    public void agregar(int id, String nombre, String datos){
+    public boolean agregar(int id, String nombre, String datos){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
 
-        SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
 
-        ContentValues values = new ContentValues();
+            values.put(COLUMNA_ID, id);
+            values.put(COLUMNA_NOMBRE, nombre);
+            values.put(COLUMNA_DATOS, datos);
 
-        values.put(COLUMNA_ID, id);
-        values.put(COLUMNA_NOMBRE, nombre);
-        values.put(COLUMNA_DATOS, datos);
-
-        db.insert(TABLA_DATOS_BASICOS, null,values);
-        db.close();
+            db.insert(TABLA_DATOS_BASICOS, null, values);
+            db.close();
+            return true;
+        }catch (Exception ignored){
+            return false;
+        }
     }
 
     public void actualizar (int id, String datos){
