@@ -94,7 +94,8 @@ public class Amigos extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        comunicador.setSearchView(false);
+        //Se cambio esta linea de codigo
+        //comunicador.setSearchView(false);
     }
 
 }
