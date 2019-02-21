@@ -184,9 +184,7 @@
     </style>
 
     <style name="ThemeSpinner">
-        <!-- Color when pressed -->
         <item name="colorAccent">#43c1cc</item>
-        <!-- Default color for the dropdown arrow and line -->
         <item name="colorControlNormal">#ffffff</item>
     </style>
 
@@ -207,8 +205,18 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="MyButton" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">?attr/colorPrimary</item>
-        <item name="colorButtonNormal">?attr/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/md_blue_300</item>
+        <item name="colorButtonNormal">@color/md_blue_500</item>
     </style>
+
+    <style name="Counter" parent="TextAppearance.Design.Counter">
+        <item name="android:textColor">@color/md_blue_500</item>
+    </style>
+
+    <style name="CounterOverFlow" parent="TextAppearance.Design.Counter.Overflow">
+        <item name="android:textColor">@color/md_red_500</item>
+    </style>
+
 </resources>

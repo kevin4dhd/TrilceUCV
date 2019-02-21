@@ -1,5 +1,9 @@
 package com.company.proyect.kevinpiazzoli.trilceucv.Fragments.BoletaDeNotas;
 
+import android.content.Context;
+
+import com.company.proyect.kevinpiazzoli.trilceucv.R;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -26,7 +30,7 @@ public class Notas {
     static List<List<Notas>> NOTASCompletas = new ArrayList<List<Notas>>();
     static ArrayList<Notas> NOTAS = new ArrayList<Notas>();
 
-    static void Actualizar(){
+    static void Actualizar(Context context){
         NOTASCompletas.clear();
         NOTAS.clear();
         for(int i=0;i<CursosNotas.getTitulosDeCurso().length;i++){
@@ -48,36 +52,36 @@ public class Notas {
                     CursosNotas.NotasCursos[i][8],
                     CursosNotas.NotasCursos[i][9]);
 
-            NOTAS.add(new Notas("Parcial N°1","", ""));
-            NOTAS.add(new Notas("","Nota 1", CursosNotas.NotasCursos[i][1]));
-            NOTAS.add(new Notas("","Nota 2", CursosNotas.NotasCursos[i][2]));
-            NOTAS.add(new Notas("","Examen Parcial(EP) ", CursosNotas.NotasCursos[i][3]));
-            NOTAS.add(new Notas("","Promedio", promedio1));
-            NOTAS.add(new Notas("","Formula", "0.30*N1+0.30*N2+0.40*EP"));
+            NOTAS.add(new Notas(context.getString(R.string.parcial) + " N°1","", ""));
+            NOTAS.add(new Notas("",context.getString(R.string.nota)+ " 1", CursosNotas.NotasCursos[i][1]));
+            NOTAS.add(new Notas("",context.getString(R.string.nota)+ " 2", CursosNotas.NotasCursos[i][2]));
+            NOTAS.add(new Notas("",context.getString(R.string.examen_parcial), CursosNotas.NotasCursos[i][3]));
+            NOTAS.add(new Notas("",context.getString(R.string.promedio), promedio1));
+            NOTAS.add(new Notas("",context.getString(R.string.formula), "0.30*N1+0.30*N2+0.40*EP"));
 
-            NOTAS.add(new Notas("Parcial N°2","", ""));
-            NOTAS.add(new Notas("","Nota 1", CursosNotas.NotasCursos[i][4]));
-            NOTAS.add(new Notas("","Nota 2", CursosNotas.NotasCursos[i][5]));
-            NOTAS.add(new Notas("","Examen Parcial(EP) ", CursosNotas.NotasCursos[i][6]));
-            NOTAS.add(new Notas("","Promedio", promedio2));
-            NOTAS.add(new Notas("","Formula", "0.30*N1+0.30*N2+0.40*EP"));
+            NOTAS.add(new Notas(context.getString(R.string.parcial)+ " N°2","", ""));
+            NOTAS.add(new Notas("",context.getString(R.string.nota)+ " 1", CursosNotas.NotasCursos[i][4]));
+            NOTAS.add(new Notas("",context.getString(R.string.nota)+ " 2", CursosNotas.NotasCursos[i][5]));
+            NOTAS.add(new Notas("",context.getString(R.string.examen_parcial), CursosNotas.NotasCursos[i][6]));
+            NOTAS.add(new Notas("",context.getString(R.string.promedio), promedio2));
+            NOTAS.add(new Notas("",context.getString(R.string.formula), "0.30*N1+0.30*N2+0.40*EP"));
 
-            NOTAS.add(new Notas("Parcial N°3","", ""));
-            NOTAS.add(new Notas("","Nota 1", CursosNotas.NotasCursos[i][7]));
-            NOTAS.add(new Notas("","Nota 2", CursosNotas.NotasCursos[i][8]));
-            NOTAS.add(new Notas("","Examen Parcial(EP) ", CursosNotas.NotasCursos[i][9]));
-            NOTAS.add(new Notas("","Promedio", promedio3));
-            NOTAS.add(new Notas("","Formula", "0.25*N1+0.25*N2+0.50*EP"));
+            NOTAS.add(new Notas(context.getString(R.string.parcial)+ " N°3","", ""));
+            NOTAS.add(new Notas("",context.getString(R.string.nota)+ " 1", CursosNotas.NotasCursos[i][7]));
+            NOTAS.add(new Notas("",context.getString(R.string.nota)+ " 2", CursosNotas.NotasCursos[i][8]));
+            NOTAS.add(new Notas("",context.getString(R.string.examen_parcial), CursosNotas.NotasCursos[i][9]));
+            NOTAS.add(new Notas("",context.getString(R.string.promedio), promedio3));
+            NOTAS.add(new Notas("",context.getString(R.string.formula), "0.25*N1+0.25*N2+0.50*EP"));
 
-            NOTAS.add(new Notas("Promedio","", ""));
-            NOTAS.add(new Notas("","Promedio Final Redondeado", RetornaRespuestaFinal2(promedio1,promedio2,promedio3)));
-            NOTAS.add(new Notas("","Promedio Final en decimales", RetornaRespuestaFinal(promedio1,promedio2,promedio3)));
-            NOTAS.add(new Notas("","Formula", "0.2*P+0.3*P+0.5*P"));
+            NOTAS.add(new Notas(context.getString(R.string.promedio),"", ""));
+            NOTAS.add(new Notas("",context.getString(R.string.promedio_final_redondeado), RetornaRespuestaFinal2(promedio1,promedio2,promedio3)));
+            NOTAS.add(new Notas("",context.getString(R.string.promedio_final_en_decimales), RetornaRespuestaFinal(promedio1,promedio2,promedio3)));
+            NOTAS.add(new Notas("",context.getString(R.string.formula), "0.2*P+0.3*P+0.5*P"));
             NOTASCompletas.add(NOTAS);
         }
     }
 
-    static String retornarRespuesta(String uno, String dos, String tres){
+    private static String retornarRespuesta(String uno, String dos, String tres){
         double nota1=Double.parseDouble(uno);
         double nota2=Double.parseDouble(dos);
         double nota3=Double.parseDouble(tres);
@@ -85,11 +89,10 @@ public class Notas {
         promedio = nota1*0.30 + nota2 * 0.30 + nota3 * 0.40;
         custom.setDecimalSeparator('.');
         formato.setDecimalFormatSymbols(custom);
-        String respuesta = formato.format(promedio);
-        return respuesta;
+        return formato.format(promedio);
     }
 
-    static String retornarRespuesta2(String uno, String dos, String tres){
+    private static String retornarRespuesta2(String uno, String dos, String tres){
             double nota1=Double.parseDouble(uno);
             double nota2=Double.parseDouble(dos);
             double nota3=Double.parseDouble(tres);
@@ -101,7 +104,7 @@ public class Notas {
         return respuesta;
     }
 
-    static String RetornaRespuestaFinal(String uno, String dos, String tres){
+    private static String RetornaRespuestaFinal(String uno, String dos, String tres){
         double nota1=Double.parseDouble(uno);
         double nota2=Double.parseDouble(dos);
         double nota3=Double.parseDouble(tres);
@@ -113,7 +116,7 @@ public class Notas {
         return respuesta;
     }
 
-    static String RetornaRespuestaFinal2(String uno, String dos, String tres){
+    private static String RetornaRespuestaFinal2(String uno, String dos, String tres){
         double nota1=Double.parseDouble(uno);
         double nota2=Double.parseDouble(dos);
         double nota3=Double.parseDouble(tres);

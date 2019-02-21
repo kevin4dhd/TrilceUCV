@@ -34,7 +34,6 @@ public class DescargarArchivos extends AsyncTask<List<DescargaArchivosDatos>, In
     @Override
     protected Boolean doInBackground(List<DescargaArchivosDatos>... params) {
         try {
-
             Descargar = params[0].get(0).Descargar;
             Cancelar = params[0].get(0).Cancelar;
             DescargaCompleta = params[0].get(0).DescargaCompleta;

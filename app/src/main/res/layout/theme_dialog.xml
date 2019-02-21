@@ -56,7 +56,6 @@
 
     <ScrollView
         android:scrollbars="vertical"
-        android:scrollbarThumbVertical="@drawable/scrollbar"
         android:clipToPadding="true"
         android:id="@+id/scrollView1"
         android:layout_width="wrap_content"
@@ -94,7 +93,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="UCV"
-                        android:src="@drawable/logo_ucv" />
+                        android:src="@mipmap/ic_launcher" />
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
@@ -110,14 +109,13 @@
                     card_view:cardBackgroundColor="@color/md_black_1000_75"
                     card_view:cardCornerRadius="2dp"
                     card_view:cardElevation="2dp">
-
                     <TextView
                         android:id="@+id/textViewBlack"
                         android:layout_width="80dp"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="Negro"
+                        android:text="@string/negro"
                         android:textColor="@color/md_text_white" />
                 </android.support.v7.widget.CardView>
             </LinearLayout>

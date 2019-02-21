@@ -1,10 +1,10 @@
 package com.company.proyect.kevinpiazzoli.trilceucv.MisAsignaturas;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.company.proyect.kevinpiazzoli.trilceucv.MisAsignaturas.Asistencias.fragment_Asistencias;
 import com.company.proyect.kevinpiazzoli.trilceucv.MisAsignaturas.Informacion_del_curso.Fragment_IDcurso;
 import com.company.proyect.kevinpiazzoli.trilceucv.MisAsignaturas.Recursos.Fragment_Recursos;
 
@@ -14,32 +14,41 @@ import com.company.proyect.kevinpiazzoli.trilceucv.MisAsignaturas.Recursos.Fragm
 
 class FragmentAdapter extends FragmentPagerAdapter {
 
-    private Context context;
-    private int PageCount=AddTablayout.getELEMENTOS();
 
-    FragmentAdapter(FragmentManager fm, Context context) {
+    FragmentAdapter(FragmentManager fm) {
         super(fm);
-        this.context = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
+        switch (position){
             case 0:
-                return new Fragment_IDcurso();
+                return Fragment_IDcurso.newInstance();
             case 1:
-                return new Fragment_Recursos();
+                return fragment_Asistencias.newInstance();
+            case 2:
+                return Fragment_Recursos.newInstance();
+            default:
+                return Fragment_IDcurso.newInstance();
         }
-        return null;
     }
 
     @Override
     public int getCount() {
-        return PageCount;
+        return 3;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return AddTablayout.TabAll()[position];
+        switch (position){
+            case 0:
+                return "Información del Curso";
+            case 1:
+                return "Asistencia";
+            case 2:
+                return "Recursos";
+            default:
+                return "Recursos";
+        }
     }
 }

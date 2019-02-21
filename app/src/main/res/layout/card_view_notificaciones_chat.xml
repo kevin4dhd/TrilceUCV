@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:clickable="true"
+    android:orientation="vertical"
+    card_view:cardCornerRadius="10dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/img"
+            android:src="@drawable/ic_contact_icon"
+            android:padding="10dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"/>
+        <LinearLayout
+            android:id="@+id/Datos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/Usuario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="New Text"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    tools:text="Kevin Piazzoli Felix Perez" />
+                <TextView
+                    android:id="@+id/Carrera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="New Text"
+                    tools:text="Ingenieria de sisetmas" />
+            </LinearLayout>
+        </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/EnviarMensaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            card_view:srcCompat="@android:drawable/ic_menu_send"
+            card_view:backgroundTint="?attr/colorPrimary"
+            card_view:rippleColor="?attr/colorPrimaryDark"
+            android:gravity="center"
+            />
+    </LinearLayout>
+</android.support.v7.widget.CardView>

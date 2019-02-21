@@ -2,34 +2,29 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="Configuracion General"
+        android:title="@string/configuracion_general"
         android:key="key_tabla_title">
         <EditTextPreference
             android:selectable="false"
             android:enabled="true"
-            android:title="Usuario"
+            android:title="@string/user"
             android:clickable="false"
             android:linksClickable="false"
             android:summary="kfelix"
             android:textColor="#000000"
             android:key="op_user" />
-        <CheckBoxPreference
-            android:title="No cerrar Sesión"
-            android:key="no_cerrar_secion"
-            android:checked="false"
-            />
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="Diseño de la App"
+        android:title="@string/diseño_de_la_app"
         android:key="title_diseño_app">
         <ListPreference
             android:key="key_tabla"
-            android:title="Estilo de tablas"
-            android:summary="Seleccione el estilo de las tablas"
+            android:title="@string/estilo_de_tablas"
+            android:summary="@string/seleccione_el_estilo"
             />
         <Preference
             android:title="Theme App"
-            android:summary="Cambia los colores de la aplicación"
+            android:summary="@string/cambia_los_colores"
             android:key="key_theme"
             />
     </PreferenceCategory>

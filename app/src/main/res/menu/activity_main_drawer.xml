@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/Noticias"
-        android:title="Ultimas Noticias">
+        android:id="@+id/VerNotificaciones"
+        android:title="@string/notificaciones">
     </item>
     <item
-        android:title="Notificaciones(Beta)">
+        android:title="@string/red_social">
         <menu>
             <item
-                android:id="@+id/Notificaciones"
-                android:title="Enviar Notificaciones" />
-        </menu>
-    </item>
-    <item
-        android:title="@string/informacion_personal">
-        <menu>
-            <item
-                android:id="@+id/Datos_Basicos"
-                android:title="@string/datos_basicos" />
+                android:id="@+id/Amigos"
+                android:title="@string/amigos" />
         </menu>
     </item>
     <item android:title="@string/mis_asignaturas">
@@ -37,7 +29,7 @@
             <item
                 android:id="@+id/preferencias"
                 android:icon="@android:drawable/ic_menu_manage"
-                android:title="Configurar Cuenta" />
+                android:title="@string/configurar_cuenta" />
             <item
                 android:id="@+id/CerrarSesion"
                 android:icon="@android:drawable/ic_lock_power_off"

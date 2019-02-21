@@ -1,18 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeMovieHits"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ListView
+        android:layout_height="match_parent"
+        android:id="@+id/listView"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    </android.support.v7.widget.RecyclerView>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#222">
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/listView"
-            android:listSelector="@android:color/transparent"
-            android:cacheColorHint="@android:color/transparent"
-            />
-    </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+            app:layout_scrollFlags="scroll"
+            android:background="?attr/colorPrimaryDark">
+            <RelativeLayout
+                android:layout_width="150sp"
+                android:layout_height="150sp"
+                android:layout_gravity="center"
+                app:layout_collapseMode="parallax">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circle_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:border_color="@android:color/white"
+                    app:border_width="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+</android.support.design.widget.CoordinatorLayout>

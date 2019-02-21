@@ -1,0 +1,71 @@
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:clickable="true"
+    android:orientation="vertical"
+    card_view:cardCornerRadius="10dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/tv_discount"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="New Text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            tools:text="50%" />
+        <TextView
+            android:id="@+id/Titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/tv_discount"
+            android:text="New Text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            tools:text="Nueva Solicitud De Amistad" />
+        <TextView
+            android:paddingRight="25sp"
+            android:id="@+id/Descripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Titulo"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/tv_discount"
+            android:text="New Text"
+            tools:text="Recuerda no aceptar la solicitud a personas extrañas"
+            android:maxLines="2"
+            android:ellipsize="end" />
+        <TextView
+            android:id="@+id/Fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Descripcion"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/tv_discount"
+            android:text="New Text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textStyle="italic"
+            tools:text="Fecha de envio: 7/07/2016" />
+        <Button
+            android:id="@+id/button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Fecha"
+            android:layout_toRightOf="@+id/tv_discount"
+            android:text="@string/ver_mas_detalles"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="13sp" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

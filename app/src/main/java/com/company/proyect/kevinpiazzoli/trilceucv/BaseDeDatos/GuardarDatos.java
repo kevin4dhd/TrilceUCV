@@ -1,6 +1,7 @@
 package com.company.proyect.kevinpiazzoli.trilceucv.BaseDeDatos;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -26,7 +27,7 @@ public class GuardarDatos {
         editor.apply();
     }
 
-    static public String CargarUsuario(Activity actividad){
+    static public String CargarUsuario(Context actividad){
         SharedPreferences preferencias;
         preferencias = PreferenceManager.getDefaultSharedPreferences(actividad);
         return preferencias.getString("op_user","NoUser");

@@ -1,11 +1,13 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.company.proyect.kevinpiazzoli.trilceucv.Fragments.Asig_matriculadas.Asignaturas_Matriculadas">
-    <ListView
-        android:id="@+id/ListaDeCursos"
+    android:orientation="horizontal">
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
-</FrameLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/recicleView"
+        tools:listitem="@layout/card_view_asignaturas" />
+</RelativeLayout>

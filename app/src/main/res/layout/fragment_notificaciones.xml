@@ -2,33 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="20sp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/Token"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeMovieHits"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Token: "
-        />
-    <EditText
-        android:id="@+id/MensajeNotificacion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Escribe un mensaje"
-        />
-    <Button
-        android:id="@+id/EnviarNotificacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Enviar"
-        />
-    <Button
-        android:id="@+id/ToqueButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Tocar Button"
-        />
-
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recicleView"
+            tools:listitem="@layout/card_view_notificaciones_chat"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

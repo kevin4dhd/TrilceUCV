@@ -45,15 +45,15 @@ public class Fragment_IDcurso extends Fragment{
     public Fragment_IDcurso(){
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_misasignaturas, container, false);
+    public static Fragment_IDcurso newInstance() {
+        return new Fragment_IDcurso();
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        lista_datos = (ListView)getActivity().findViewById(R.id.listView);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_misasignaturas, container, false);
+
+        lista_datos = (ListView) view.findViewById(R.id.listView);
 
         ArrayDatos = new ArrayList<>();
         adaptador = new DatosAdapter(getActivity(),ArrayDatos);
@@ -68,6 +68,8 @@ public class Fragment_IDcurso extends Fragment{
             InformacionID_curso = UCVdb.ObtenerInformacionAsignaturaMatricuolada(0,CodigoCurso,keys);
             ActualziarTablas();
         }
+
+        return view;
     }
 
     public void ActualziarTablas(){

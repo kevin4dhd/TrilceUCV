@@ -8,21 +8,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
-import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.Comunicador;
 import com.company.proyect.kevinpiazzoli.trilceucv.R;
 
 /**
  * Created by KevinPiazzoli on 25/10/2016.
  */
 
-public class MisAsignaturas_Activity extends AppCompatActivity implements Comunicador{
+public class MisAsignaturas_Activity extends AppCompatActivity{
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     private SharedPreferences sharedPreferences;
-    private Boolean homeButton = false, themeChanged;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Theme();
@@ -31,7 +27,7 @@ public class MisAsignaturas_Activity extends AppCompatActivity implements Comuni
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Aula Virtual Alumno");
+        setTitle("Aula Virtual Alumno");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,14 +35,13 @@ public class MisAsignaturas_Activity extends AppCompatActivity implements Comuni
                 finish();
             }
         });
-        tabLayout = (TabLayout) findViewById(R.id.tablelayout);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablelayout);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout.setupWithViewPager(viewPager);
-        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(),this));
+        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
         themeChanged();
     }
-
-
 
     public void Theme() {
         sharedPreferences = getSharedPreferences("VALUES", Context.MODE_PRIVATE);
@@ -55,8 +50,8 @@ public class MisAsignaturas_Activity extends AppCompatActivity implements Comuni
     }
 
     private void themeChanged() {
-        themeChanged = sharedPreferences.getBoolean("THEMECHANGED", false);
-        homeButton = true;
+        Boolean themeChanged = sharedPreferences.getBoolean("THEMECHANGED", false);
+        Boolean homeButton = true;
     }
 
     public void settingTheme(int theme) {
@@ -101,20 +96,5 @@ public class MisAsignaturas_Activity extends AppCompatActivity implements Comuni
                 setTheme(R.style.AppThemeUCV);
                 break;
         }
-    }
-
-    @Override
-    public void responder(String datos) {
-        Toast.makeText(this,datos,Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void notificacion(String datos) {
-
-    }
-
-    @Override
-    public void EntrarALaNoticia(String Titulo, String Descripcion, String Fecha) {
-
     }
 }

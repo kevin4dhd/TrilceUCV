@@ -20,7 +20,6 @@ import com.company.proyect.kevinpiazzoli.trilceucv.BaseDeDatos.BaseDeDatosUCV;
 import com.company.proyect.kevinpiazzoli.trilceucv.BaseDeDatos.GuardarDatos;
 import com.company.proyect.kevinpiazzoli.trilceucv.ConexionInternet.DetectarInternet;
 import com.company.proyect.kevinpiazzoli.trilceucv.ConexionInternet.VolleyS;
-import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.Comunicador;
 import com.company.proyect.kevinpiazzoli.trilceucv.R;
 
 import org.json.JSONObject;
@@ -37,7 +36,6 @@ import java.util.List;
 
 public class Fragment_Recursos extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private Comunicador comunicacion;
     private List<Archivos> archivos;
     private VolleyS volley;
     private String IP;
@@ -47,22 +45,25 @@ public class Fragment_Recursos extends Fragment implements SwipeRefreshLayout.On
     private String AñoSilabo = "_silabo_201602.pdf";
     private BaseDeDatosUCV UCVdb;
     private String CodigoCurso;
-    private static final String URLSilabo = "http://kpfp.pe.hu/pdfs/";
-    private static final String URL = "http://kpfp.pe.hu/recursos/";
+    private static final String URLSilabo = "http://kpfpservice.000webhostapp.com/pdfs/";
+    private static final String URL = "http://kpfpservice.000webhostapp.com/recursos/";
     static DecimalFormat formato = new DecimalFormat("0.000");
     static DecimalFormatSymbols custom=new DecimalFormatSymbols();
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rv;
     private RVArchivosAdapter adapter;
 
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        comunicacion=(Comunicador) getActivity();
-        swipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeMovieHits);
+    public static Fragment_Recursos newInstance() {
+        return new Fragment_Recursos();
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_recursos, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeMovieHits);
         swipeRefreshLayout.setOnRefreshListener(this);
-        IP ="http://kpfp.pe.hu/conectkevin/UCV_datos_usuarios_GETALL.php"+"?id="+ GuardarDatos.CargarUsuario(getActivity());
+        IP ="http://kpfpservice.000webhostapp.com/UCV_datos_usuarios_GETALL.php"+"?id="+ GuardarDatos.CargarUsuario(getActivity());
 
-        rv = (RecyclerView)getActivity().findViewById(R.id.recicleView);
+        rv = (RecyclerView) view.findViewById(R.id.recicleView);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         rv.setLayoutManager(llm);
 
@@ -75,7 +76,7 @@ public class Fragment_Recursos extends Fragment implements SwipeRefreshLayout.On
         if(bundle!=null){
             UCVdb = new BaseDeDatosUCV(getActivity());
             CodigoCurso = bundle.getString("key_curso");
-            List<Recursos> Recursos = UCVdb.ObtenerRecursos(0,CodigoCurso);
+            List<Recursos> Recursos = UCVdb.ObtenerRecursos(0,CodigoCurso,getContext());
 
             custom.setDecimalSeparator('.');
             formato.setDecimalFormatSymbols(custom);
@@ -108,11 +109,7 @@ public class Fragment_Recursos extends Fragment implements SwipeRefreshLayout.On
             }
         }
         rv.setAdapter(adapter);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_recursos, container, false);
+        return view;
     }
 
 
@@ -125,7 +122,6 @@ public class Fragment_Recursos extends Fragment implements SwipeRefreshLayout.On
         }
         else{
             swipeRefreshLayout.setRefreshing(false);
-            comunicacion.responder("Necesita estar conectado a internet");
         }
     }
 
@@ -136,7 +132,7 @@ public class Fragment_Recursos extends Fragment implements SwipeRefreshLayout.On
                 archivos = new ArrayList<>();
                 adapter = new RVArchivosAdapter(archivos);
                 UCVdb.actualizarDatos(0,jsonObject.toString());
-                List<Recursos> Recursos = UCVdb.ObtenerRecursos(0,CodigoCurso);
+                List<Recursos> Recursos = UCVdb.ObtenerRecursos(0,CodigoCurso,getContext());
 
                 custom.setDecimalSeparator('.');
                 formato.setDecimalFormatSymbols(custom);
@@ -169,8 +165,6 @@ public class Fragment_Recursos extends Fragment implements SwipeRefreshLayout.On
                 }
 
                 rv.setAdapter(adapter);
-
-                comunicacion.responder("Datos actualizados correctamente");
                 swipeRefreshLayout.setRefreshing(false);
             }
 

@@ -8,40 +8,4 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@android:color/background_light">
-
-    <!-- TODO: Update blank fragment layout -->
-
-    <!--Array con los valores de la cabecera de la tabla-->
-    <ScrollView
-        android:id="@+id/scrollvertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:layout_weight="1">
-
-        <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/scrollhorizontal"
-            android:scrollbars="horizontal"
-            android:layout_weight="1">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TableLayout
-                    android:id="@+id/tablaCabezera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </TableLayout>
-                <TableLayout
-                    android:id="@+id/tablaInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </TableLayout>
-            </LinearLayout>
-        </HorizontalScrollView>
-
-    </ScrollView>
-
 </FrameLayout>

@@ -33,7 +33,7 @@ public class Boleta_De_Notas extends Fragment {
         tabLayout = (TabLayout) getView().findViewById(R.id.tablelayout);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(mAdapter);
-        Notas.Actualizar();
+        Notas.Actualizar(getContext());
     }
 
     public interface OnFragmentInteractionListener {

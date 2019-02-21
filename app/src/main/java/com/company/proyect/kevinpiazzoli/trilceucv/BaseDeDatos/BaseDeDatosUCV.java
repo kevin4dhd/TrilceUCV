@@ -6,13 +6,21 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.Asig_matriculadas.Subdatos_Asignaturas_Matriculadas;
 import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.BoletaDeNotas.ArreglosdeArreglos;
+import com.company.proyect.kevinpiazzoli.trilceucv.Fragments.Notificaciones.RetornarDatos;
+import com.company.proyect.kevinpiazzoli.trilceucv.MisAsignaturas.Asistencias.Asistencias;
 import com.company.proyect.kevinpiazzoli.trilceucv.MisAsignaturas.Recursos.Recursos;
+import com.company.proyect.kevinpiazzoli.trilceucv.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -21,19 +29,21 @@ import java.util.List;
 
 public class BaseDeDatosUCV extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "basededatos.db";
 
     public static final String TABLA_DATOS_BASICOS = "TablaDaBa";
     public static final String COLUMNA_ID = "key_id";
     public static final String COLUMNA_NOMBRE = "key_nombre";
     public static final String COLUMNA_DATOS = "key_datos";
+    public static final String COLUMNA_NOTIFICACION = "key_notificaciones";
 
     private static final String SQL_CREAR = "create table "
             + TABLA_DATOS_BASICOS + "(" + COLUMNA_ID
             + " integer primary key, " + COLUMNA_NOMBRE
             + " text not null, "+ COLUMNA_DATOS
-            + " text not null);";
+            + " text not null, "+ COLUMNA_NOTIFICACION
+            + " VARCHAR(10000));";
 
     public BaseDeDatosUCV(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,6 +54,9 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+        if (newVersion > oldVersion) {
+            db.execSQL("ALTER TABLE " + TABLA_DATOS_BASICOS + " ADD COLUMN " + COLUMNA_NOTIFICACION + " VARCHAR(10000)");
+        }
     }
 
     public boolean agregar(int id, String nombre, String datos){
@@ -78,41 +91,11 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
         db.close();
     }
 
-    public boolean eliminar(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        try{
-            db.delete(TABLA_DATOS_BASICOS,
-                    " _id = ?",
-                    new String[] { String.valueOf (id ) });
-            db.close();
-            return true;
-        }catch(Exception ex){
-            return false;
-        }
-    }
-
     public String obtenerDatosBasicos(int id){
 
         String Datos = "";
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMNA_ID, COLUMNA_DATOS};
-
-        Cursor cursor =
-                db.query(TABLA_DATOS_BASICOS,
-                        projection,
-                        " "+COLUMNA_ID+" = ?",
-                        new String[] { String.valueOf(id) },
-                        null,
-                        null,
-                        null,
-                        null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        String DatosInternet = cursor.getString(1);
-        cursor.close();
-        db.close();
         try {
-            JSONObject datos = new JSONObject(DatosInternet);
+            JSONObject datos = new JSONObject(getCursor(0));
             Datos = datos.getString("datos_basicos");
         } catch (JSONException e) {
             //bd.close();
@@ -121,27 +104,9 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
     }
 
     public String[] ObtenerNombresyApellidos(int id){
-
         String Nombre[] = {"Error al cargar nombre","Error al cargar carrera"};
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMNA_ID, COLUMNA_DATOS};
-
-        Cursor cursor =
-                db.query(TABLA_DATOS_BASICOS,
-                        projection,
-                        " "+COLUMNA_ID+" = ?",
-                        new String[] { String.valueOf(id) },
-                        null,
-                        null,
-                        null,
-                        null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        String DatosInternet = cursor.getString(1);
-        cursor.close();
-        db.close();
         try {
-            JSONObject datos = new JSONObject(DatosInternet);
+            JSONObject datos = new JSONObject(getCursor(0));
             Nombre[0] = datos.getJSONObject("datos_basicos").getString("nombres")+ " "+datos.getJSONObject("datos_basicos").getString("apellidos") ;
             Nombre[1] = datos.getJSONObject("datos_basicos").getString("escuela") ;
         } catch (JSONException e) {
@@ -150,36 +115,35 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
         return Nombre;
     }
 
+    public RetornarDatos ObtenerNombresyCarrera(int id){
+
+        String Nombre[][] = new String[0][3];
+        String NombreCadena = "";
+        RetornarDatos retornarDatos;
+        try {
+            JSONObject datos = new JSONObject(getCursor(0));
+            JSONArray CadenadeTokens = datos.getJSONArray("Tokens");
+            Nombre = new String[CadenadeTokens.length()][3];
+            for (int i=0;i<CadenadeTokens.length();i++){
+                Nombre[i][0] = datos.getJSONObject("Usuarios"+i).getString("nombres")+ " "+datos.getJSONObject("datos_basicos").getString("apellidos");
+                Nombre[i][1] = datos.getJSONObject("Usuarios"+i).getString("nombres");
+                Nombre[i][2] = datos.getJSONObject("Usuarios"+i).getString("escuela");
+            }
+            NombreCadena = datos.getJSONObject("datos_basicos").getString("nombres");
+        } catch (JSONException e) {
+            //bd.close();
+        }
+        retornarDatos= new RetornarDatos(Nombre,NombreCadena);
+        return retornarDatos;
+    }
+
     public List<ArreglosdeArreglos> obtenerCursosyCodeyNotas(int id) {
 
         String CursosArray[];
         String NotasArray[][];
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMNA_ID, COLUMNA_DATOS};
-
-        Cursor cursor =
-                db.query(TABLA_DATOS_BASICOS,
-                        projection,
-                        " " + COLUMNA_ID + " = ?",
-                        new String[]{String.valueOf(id)},
-                        null,
-                        null,
-                        null,
-                        null);
-
-
-        if (cursor != null)
-            cursor.moveToFirst();
-        String Cursos = cursor.getString(1);
-        cursor.close();
-        db.close();
-
         List<ArreglosdeArreglos> ListDeVectores =  new ArrayList<>();
-
-
         try {
-            JSONObject datos = new JSONObject(Cursos);
+            JSONObject datos = new JSONObject(getCursor(0));
             String CadenaDeCursos = datos.getJSONObject("Cursos").getString("Cursos");
             String[] Codigos_volley = CadenaDeCursos.split(" ");
 
@@ -203,34 +167,10 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
         return ListDeVectores;
     }
 
-    public List<Recursos> ObtenerRecursos(int id, String Curso) {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMNA_ID, COLUMNA_DATOS};
-
-        Cursor cursor =
-                db.query(TABLA_DATOS_BASICOS,
-                        projection,
-                        " " + COLUMNA_ID + " = ?",
-                        new String[]{String.valueOf(id)},
-                        null,
-                        null,
-                        null,
-                        null);
-
-
-        if (cursor != null)
-            cursor.moveToFirst();
-        String Datos = cursor.getString(1);
-        cursor.close();
-        db.close();
-
+    public List<Recursos> ObtenerRecursos(int id, String Curso, Context context) {
         List<Recursos> ListDeVectores =  new ArrayList<>();
-
-
         try {
-            JSONObject datos = new JSONObject(Datos);
-
+            JSONObject datos = new JSONObject(getCursor(0));
             for (int i = 0; i < 16; i++) {
                 String Recursos = datos.getJSONObject("Recursos"+Curso).getString("semana"+(i+1));
                 String SepararRecursos[] = Recursos.split("-");
@@ -240,7 +180,7 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
                             SepararDatosRecursos[0],
                             SepararDatosRecursos[1],
                             SepararDatosRecursos[2],
-                            "semana"+(i+1),
+                            context.getString(R.string.semana)+(i+1),
                             "Semana "+(i+1)));
                 }
             }
@@ -251,27 +191,8 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
 
     public String[] obtenerCodigos(int id){
         String Codigos[]=null;
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMNA_ID, COLUMNA_DATOS};
-
-        Cursor cursor =
-                db.query(TABLA_DATOS_BASICOS,
-                        projection,
-                        " "+COLUMNA_ID+" = ?",
-                        new String[] { String.valueOf(id) },
-                        null,
-                        null,
-                        null,
-                        null);
-
-
-        if (cursor != null)
-            cursor.moveToFirst();
-        String Cursos = cursor.getString(1);
-        cursor.close();
-        db.close();
         try {
-            JSONObject datos = new JSONObject(Cursos);
+            JSONObject datos = new JSONObject(getCursor(0));
             String CadenaDeCursos = datos.getJSONObject("Cursos").getString("Cursos");
             Codigos = CadenaDeCursos.split(" ");
         } catch (JSONException ignored) {
@@ -279,45 +200,59 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
         return Codigos;
     }
 
-    public String[][] ObtenerAsignaturasAdapter(int id){
-        String Codigos[][] = new String[0][4];
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMNA_ID, COLUMNA_DATOS};
-
-        Cursor cursor =
-                db.query(TABLA_DATOS_BASICOS,
-                        projection,
-                        " "+COLUMNA_ID+" = ?",
-                        new String[] { String.valueOf(id) },
-                        null,
-                        null,
-                        null,
-                        null);
-
-
-        if (cursor != null)
-            cursor.moveToFirst();
-        String Cursos = cursor.getString(1);
-        cursor.close();
-        db.close();
+    public List<Subdatos_Asignaturas_Matriculadas> ObtenerAsignaturasAdapter(int id){
+        ArrayList<Subdatos_Asignaturas_Matriculadas> ArrayAuxiliar= new ArrayList<>();
         try {
-            JSONObject datos = new JSONObject(Cursos);
+            JSONObject datos = new JSONObject(getCursor(0));
             String CadenaDeCursos = datos.getJSONObject("Cursos").getString("Cursos");
             String[] Codigos_volley = CadenaDeCursos.split(" ");
-            Codigos = new String[Codigos_volley.length][4];
             for(int i=0;i<Codigos_volley.length;i++){
-                String CodetoStringCurso = datos.getJSONObject(Codigos_volley[i]).getString("asignatura");
-                String CodetoStringDocente = datos.getJSONObject(Codigos_volley[i]).getString("docente");
-                String CodetoStringCiclo = datos.getJSONObject(Codigos_volley[i]).getString("ciclo");
-                String CodetoStringCodigo = Codigos_volley[i];
-                Codigos[i][0]=CodetoStringCurso;
-                Codigos[i][1]=CodetoStringDocente;
-                Codigos[i][2]=CodetoStringCiclo;
-                Codigos[i][3]=CodetoStringCodigo;
+                Subdatos_Asignaturas_Matriculadas Auxi = new Subdatos_Asignaturas_Matriculadas();
+                Auxi.setCurso(datos.getJSONObject(Codigos_volley[i]).getString("asignatura"));
+                Auxi.setDocente(datos.getJSONObject(Codigos_volley[i]).getString("docente"));
+                Auxi.setCiclo(datos.getJSONObject(Codigos_volley[i]).getString("ciclo"));
+                Auxi.setDia(datos.getJSONObject(Codigos_volley[i]).getString("dia"));
+                Auxi.setHora(datos.getJSONObject(Codigos_volley[i]).getString("horas"));
+                Auxi.setAula(datos.getJSONObject(Codigos_volley[i]).getString("ambiente"));
+                Auxi.setCodigoDelCurso(Codigos_volley[i]);
+                ArrayAuxiliar.add(Auxi);
             }
         } catch (JSONException ignored) {
         }
-        return Codigos;
+        return ArrayAuxiliar;
+    }
+
+    public List<Asistencias> ObtenerAsistencias(String Curso, String HoraIngreso, String HoraSalida, int DayWekend, Context context){
+        ArrayList<Asistencias> ArrayAuxiliar= new ArrayList<>();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
+        Calendar currentCal = new GregorianCalendar(2016,7,28);
+
+        try {
+            JSONObject datos = new JSONObject(getCursor(0));
+            JSONArray AsistenciasArray = datos.getJSONArray("Asistencias");
+            for(int i=0;i<AsistenciasArray.length();i++){
+                String idCurso = AsistenciasArray.getJSONObject(i).getString("id");
+                if(Curso.compareTo(idCurso)==0) {
+                    currentCal.add(Calendar.DATE, DayWekend-1);
+                    for(int k=0;k<16;k++) {
+                        Asistencias Auxi = new Asistencias();
+                        Auxi.setSemana(context.getString(R.string.semana)+(k+1));
+                        String EstadoAsistencia = AsistenciasArray.getJSONObject(i).getString("semana"+(k+1));
+                        if(EstadoAsistencia.compareTo("A")==0) Auxi.setHoraDeLlegada(HoraIngreso);
+                        else Auxi.setHoraDeLlegada("xx:xx");
+                        Auxi.setEstado(EstadoAsistencia);
+                        Auxi.setHoraDelCurso(HoraIngreso + " - " + HoraSalida);
+                        Auxi.setFecha(dateFormat.format(currentCal.getTime()));
+                        ArrayAuxiliar.add(Auxi);
+                        currentCal.add(Calendar.DATE, 7);
+                    }
+                    break;
+                }
+            }
+        } catch (JSONException ignored) {
+        }
+        return ArrayAuxiliar;
     }
 
     public void actualizarDatos (int id, String datos){
@@ -336,27 +271,8 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
 
     public String[][] ObtenerInformacionAsignaturaMatricuolada(int id, String codigo, String[] keys){
         String Informacion[][] = new String[0][2];
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {COLUMNA_ID, COLUMNA_DATOS};
-
-        Cursor cursor =
-                db.query(TABLA_DATOS_BASICOS,
-                        projection,
-                        " "+COLUMNA_ID+" = ?",
-                        new String[] { String.valueOf(id) },
-                        null,
-                        null,
-                        null,
-                        null);
-
-
-        if (cursor != null)
-            cursor.moveToFirst();
-        String Datos = cursor.getString(1);
-        cursor.close();
-        db.close();
         try {
-            JSONObject datos = new JSONObject(Datos);
+            JSONObject datos = new JSONObject(getCursor(0));
             Informacion = new String[keys.length][3];
             for(int i=0;i<keys.length;i++){
                 Informacion[i][0] = datos.getJSONObject(codigo).getString(keys[i]);
@@ -381,6 +297,157 @@ public class BaseDeDatosUCV extends SQLiteOpenHelper {
                         null,
                         null);
         return cursor;
+    }
+
+    public List<List<String>> ObtenerAmigos(int id){
+        List<List<String>> Amigos = new ArrayList<>();
+        try {
+            JSONObject datos = new JSONObject(getCursor(0));
+            JSONArray CadenaDeAmigos = datos.getJSONArray("Amigos");
+            for(int i=0;i<CadenaDeAmigos.length();i++){
+                List<String> AmigosAuxiliares = new ArrayList<>();
+                AmigosAuxiliares.add(CadenaDeAmigos.getJSONObject(i).getString("id"));
+                AmigosAuxiliares.add(CadenaDeAmigos.getJSONObject(i).getString("nombres"));
+                AmigosAuxiliares.add(CadenaDeAmigos.getJSONObject(i).getString("apellidos"));
+                AmigosAuxiliares.add(CadenaDeAmigos.getJSONObject(i).getString("genero"));
+                AmigosAuxiliares.add(CadenaDeAmigos.getJSONObject(i).getString("escuela"));
+                AmigosAuxiliares.add("true");
+                Amigos.add(AmigosAuxiliares);
+            }
+        } catch (JSONException ignored) {
+        }
+        return Amigos;
+    }
+
+    public List<List<String>> ObtenerEstadoAmigos(int id){
+        List<List<String>> Amigos = new ArrayList<>();
+        try {
+            JSONObject datos = new JSONObject(getCursor(0));
+            JSONArray CadenaDeAmigos = datos.getJSONArray("Estado_Amigos");
+            for(int i=0;i<CadenaDeAmigos.length();i++){
+                List<String> AmigosAuxiliares = new ArrayList<>();
+                AmigosAuxiliares.add(CadenaDeAmigos.getJSONObject(i).getString("id"));
+                AmigosAuxiliares.add(CadenaDeAmigos.getJSONObject(i).getString("estado"));
+                Amigos.add(AmigosAuxiliares);
+            }
+        } catch (JSONException ignored) {
+        }
+        return Amigos;
+    }
+
+    public List<List<String>> ObtenerBuscadorDeAmigosSearch(List<List<String>> EstadoAmigos , String UsuarioPrincipal){
+        List<List<String>> Amigos = new ArrayList<>();
+        try {
+            JSONObject datos = new JSONObject(getCursor(0));
+            JSONArray CadenaDeAmigos = datos.getJSONArray("all_users");
+            for(int i=0;i<CadenaDeAmigos.length();i++){
+                List<String> AmigosAuxiliares = new ArrayList<>();
+                String idUser = CadenaDeAmigos.getJSONObject(i).getString("id");
+                if(UsuarioPrincipal.compareTo(idUser)!=0) {
+                    AmigosAuxiliares.add(idUser);
+                    AmigosAuxiliares.add(CadenaDeAmigos.getJSONObject(i).getString("nombres"));
+                    AmigosAuxiliares.add(CadenaDeAmigos.getJSONObject(i).getString("apellidos"));
+                    for(int u=0;u<EstadoAmigos.size();u++){
+                        if(idUser.compareTo(EstadoAmigos.get(u).get(0))==0)
+                            AmigosAuxiliares.add(EstadoAmigos.get(u).get(1));
+                    }
+                    if (AmigosAuxiliares.size() != 4) AmigosAuxiliares.add("No_Amigo");
+                    if(AmigosAuxiliares.get(3).compareTo("Amigos")!=0)
+                    Amigos.add(AmigosAuxiliares);
+                }
+            }
+        } catch (JSONException ignored) {}
+        return Amigos;
+    }
+
+    public List<List<String>> ObtenerMensajes(int id, String User){
+        List<List<String>> Mensajes = new ArrayList<>();
+        try {
+            JSONObject datos = new JSONObject(getCursor(0));
+            String MensajesCadena = datos.getString("Mensajes");
+            JSONObject JsonDatos = new JSONObject(MensajesCadena);
+            JSONArray ArrayMensajes = JsonDatos.getJSONArray(User);
+            for(int i=0;i<ArrayMensajes.length();i++){
+                List<String> MensajesAuxiliares = new ArrayList<>();
+                MensajesAuxiliares.add(ArrayMensajes.getJSONObject(i).getString("id"));
+                MensajesAuxiliares.add(ArrayMensajes.getJSONObject(i).getString("mensaje"));
+                MensajesAuxiliares.add(ArrayMensajes.getJSONObject(i).getString("tipo_mensaje"));
+                MensajesAuxiliares.add(ArrayMensajes.getJSONObject(i).getString("hora_del_mensaje"));
+                Mensajes.add(MensajesAuxiliares);
+            }
+        } catch (JSONException ignored) {
+        }
+        return Mensajes;
+    }
+
+    public Boolean ActualizarMensajes(int id,String User, String NuevoMensaje){
+        List<List<String>> Mensajes = new ArrayList<>();
+        try {
+            //GET
+            JSONObject datos = new JSONObject(getCursor(0));
+            String MensajesCadena = datos.getString("Mensajes");
+            JSONObject JsonDatos = new JSONObject(MensajesCadena);
+            JSONArray ArrayMensajes = JsonDatos.getJSONArray(User);
+
+            //Update
+            JSONObject UpdateJSON = new JSONObject(NuevoMensaje);
+            ArrayMensajes.put(UpdateJSON);
+            JsonDatos.put(User,ArrayMensajes);
+            datos.put("Mensajes",JsonDatos);
+
+            //UpdateBD
+            actualizar(0,datos.toString());
+        } catch (JSONException ignored) {
+            return false;
+        }
+        return true;
+    }
+
+    public String getNameUserPrincipal(int id){
+        String Nombre = "Example";
+        try {
+            JSONObject datos = new JSONObject(getCursor(0));
+            Nombre = datos.getJSONObject("datos_basicos").getString("nombres");
+        }catch (JSONException e) {
+                e.printStackTrace();
+            }
+        return Nombre;
+    }
+
+    private String getCursor(int id){
+        String DatosJSON = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {COLUMNA_ID, COLUMNA_DATOS};
+
+        Cursor cursor =
+                db.query(TABLA_DATOS_BASICOS,
+                        projection,
+                        " "+COLUMNA_ID+" = ?",
+                        new String[] { String.valueOf(id) },
+                        null,
+                        null,
+                        null,
+                        null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            DatosJSON = cursor.getString(1);
+            cursor.close();
+            db.close();
+        }
+        return DatosJSON;
+    }
+
+    public boolean eliminar(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try{
+            db.delete(TABLA_DATOS_BASICOS,
+                    " _id = ?",
+                    new String[] { String.valueOf (id ) });
+            db.close();
+            return true;
+        }catch(Exception ex){
+            return false;
+        }
     }
 
 }

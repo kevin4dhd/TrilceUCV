@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 
-import com.company.proyect.kevinpiazzoli.trilceucv.ActivitysPrincipales.Datos_Basicos;
+import com.company.proyect.kevinpiazzoli.trilceucv.ActivitysPrincipales.ActivityPrincipal;
 import com.company.proyect.kevinpiazzoli.trilceucv.R;
 
 public class ColorChooserDialog extends DialogFragment implements View.OnClickListener {
@@ -68,62 +68,62 @@ public class ColorChooserDialog extends DialogFragment implements View.OnClickLi
         switch (v.getId()) {
             case R.id.card_viewUCV:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(0);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(0);
                 ResetWindow();
                 break;
             case R.id.card_view1:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(1);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(1);
                 ResetWindow();
                 break;
             case R.id.card_view2:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(2);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(2);
                 ResetWindow();
                 break;
             case R.id.card_view3:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(3);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(3);
                 ResetWindow();
                 break;
             case R.id.card_view4:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(4);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(4);
                 ResetWindow();
                 break;
             case R.id.card_view5:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(5);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(5);
                 ResetWindow();
                 break;
             case R.id.card_view6:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(6);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(6);
                 ResetWindow();
                 break;
             case R.id.card_view7:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(7);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(7);
                 ResetWindow();
                 break;
             case R.id.card_view8:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(8);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(8);
                 ResetWindow();
                 break;
             case R.id.card_view9:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(9);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(9);
                 ResetWindow();
                 break;
             case R.id.card_view10:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(10);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(10);
                 ResetWindow();
                 break;
             case R.id.card_viewBlack:
                 sharedPreferences.edit().putBoolean("THEMECHANGED", true).apply();
-                ((Datos_Basicos) getActivity()).setThemeFragment(11);
+                ((ActivityPrincipal) getActivity()).setThemeFragment(11);
                 ResetWindow();
                 break;
             case R.id.buttonAgree:

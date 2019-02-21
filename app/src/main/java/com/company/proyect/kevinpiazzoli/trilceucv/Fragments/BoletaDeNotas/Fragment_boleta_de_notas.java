@@ -34,9 +34,10 @@ public class Fragment_boleta_de_notas extends Fragment implements SwipeRefreshLa
     protected RequestQueue fRequestQueue;
     private SwipeRefreshLayout swipeRefreshLayout;
     private BaseDeDatosUCV UCVdb;
-    private  RecyclerView reciclador;
+    private RecyclerView reciclador;
 
     private static final String ARG_SECTION_NUMBER = "section_number";
+
     public static Fragment_boleta_de_notas newInstance(int sectionNumber) {
         Fragment_boleta_de_notas fragment = new Fragment_boleta_de_notas();
         Bundle args = new Bundle();
@@ -49,25 +50,18 @@ public class Fragment_boleta_de_notas extends Fragment implements SwipeRefreshLa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_boleta_de_notas_viewpager, container, false);
-
         comunicacion=(Comunicador) getActivity();
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeMovieHits);
-        IP ="http://kpfp.pe.hu/conectkevin/UCV_datos_usuarios_GETALL.php"+"?id="+ GuardarDatos.CargarUsuario(getActivity());
+        IP ="http://kpfpservice.000webhostapp.com/UCV_datos_usuarios_GETALL.php"+"?id="+ GuardarDatos.CargarUsuario(getActivity());
         UCVdb = new BaseDeDatosUCV(getActivity());
-
         swipeRefreshLayout.setOnRefreshListener(this);
         reciclador = (RecyclerView) view.findViewById(R.id.recicladorr);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         reciclador.setLayoutManager(llm);
-
         int indiceSeccion = getArguments().getInt(ARG_SECTION_NUMBER);
-
         AdaptadorNotas adaptador = new AdaptadorNotas(Notas.NOTASCompletas.get(indiceSeccion));
-
         reciclador.setAdapter(adaptador);
-
         return view;
-
     }
 
     public Fragment_boleta_de_notas() {
@@ -82,7 +76,7 @@ public class Fragment_boleta_de_notas extends Fragment implements SwipeRefreshLa
         }
         else{
             swipeRefreshLayout.setRefreshing(false);
-            comunicacion.responder("Necesita estar conectado a internet");
+            comunicacion.responder(getString(R.string.necesita_estar_conectado_a_internet));
         }
     }
 
@@ -92,18 +86,18 @@ public class Fragment_boleta_de_notas extends Fragment implements SwipeRefreshLa
             public void onResponse(JSONObject jsonObject) {
                 UCVdb.actualizarDatos(0,jsonObject.toString());
                 new CursosNotas(getContext());
-                Notas.Actualizar();
+                Notas.Actualizar(getContext());
                 int indiceSeccion = getArguments().getInt(ARG_SECTION_NUMBER);
                 AdaptadorNotas adaptador = new AdaptadorNotas(Notas.NOTASCompletas.get(indiceSeccion));
                 reciclador.setAdapter(adaptador);
-                comunicacion.responder("Datos actualizados correctamente");
+                comunicacion.responder(getString(R.string.datos_actualizados_correctamente));
                 swipeRefreshLayout.setRefreshing(false);
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getActivity(),"Error al actualizar datos",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.error_al_actualizar_datos,Toast.LENGTH_SHORT).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
