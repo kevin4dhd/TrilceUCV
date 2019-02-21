@@ -49,7 +49,6 @@ public class Amigos extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                position = actualFragment;
                 switch (position) {
                     case 0:
                         comunicador.setSearchView(false);
